@@ -1,13 +1,14 @@
 
 server:
-  port: ${vcap.application.port:8050}
+#  port: ${vcap.application.port:8050}
+   port: 8050
 
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
-
+#      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
+      defaultZone: http://macusers-MacBook-Pro.local:9761/eureka/
 ---
 spring:
   profiles: cloud

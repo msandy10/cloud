@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -42,14 +43,28 @@ class DiscoveryClientExample implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         discoveryClient.getInstances("photo-service").forEach((ServiceInstance s) -> {
-            System.out.println(ToStringBuilder.reflectionToString(s));
+            
+        	System.out.println("photo-service-------->"+ToStringBuilder.reflectionToString(s));
         });
         discoveryClient.getInstances("bookmark-service").forEach((ServiceInstance s) -> {
-            System.out.println(ToStringBuilder.reflectionToString(s));
+            System.out.println("bookmark-service------->"+ToStringBuilder.reflectionToString(s));
         });
     }
 }
 
+/*
+@RestController
+@RequestMapping("passport-api")
+class BookmarkRestController {
+	@Autowired
+    private BookmarkClient bookmarkClient;
+	
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+	List<Bookmark> test(@PathVariable String userId) {
+		return bookmarkClient.getBookmarks(userId);
+	}
+}
+*/
 @Component
 class RestTemplateExample implements CommandLineRunner {
 
@@ -81,53 +96,17 @@ class FeignExample implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        this.bookmarkClient.getBookmarks("jlong").forEach(System.out::println);
+        this.bookmarkClient.getBookmarks("jlong").forEach(a -> {
+        	System.out.println("====================="+a);
+        	});
     }
 }
 
 @FeignClient("bookmark-service")
 interface BookmarkClient {
-
+		
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}/bookmarks")
     List<Bookmark> getBookmarks(@PathVariable("userId") String userId);
 }
 
-class Bookmark {
-    private Long id;
-    private String href, label, description, userId;
-
-    @Override
-    public String toString() {
-        return "Bookmark{" +
-                "id=" + id +
-                ", href='" + href + '\'' +
-                ", label='" + label + '\'' +
-                ", description='" + description + '\'' +
-                ", userId='" + userId + '\'' +
-                '}';
-    }
-
-    public Bookmark() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-}
 

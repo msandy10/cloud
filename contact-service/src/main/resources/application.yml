@@ -1,7 +1,7 @@
 
 server:
-#  port: ${vcap.application.port:9098}
-   port: 9098
+#  port: ${vcap.application.port:9088}
+   port: 9088
 
 spring:
   jpa:
@@ -13,11 +13,3 @@ eureka:
     serviceUrl:
 #      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
        defaultZone: http://macusers-MacBook-Pro.local:9761/eureka/
-
----
-spring:
-  profiles: cloud
-eureka:
-  instance:
-    hostname: ${APPLICATION_DOMAIN}
-    nonSecurePort: 80

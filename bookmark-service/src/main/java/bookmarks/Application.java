@@ -27,13 +27,15 @@ public class Application {
     @Bean
     CommandLineRunner init(BookmarkRepository bookmarkRepository) {
         return args -> {
-            bookmarkRepository.deleteAll();
-
+            System.out.println("---------------------------------------");
             Arrays.asList("mstine", "jlong").forEach(n ->
                     bookmarkRepository.save(new Bookmark(n,
                             "http://some-other-host" + n + ".com/",
                             "A description for " + n + "'s link",
                             n)));
+            System.out.println("---------------------------------------");
+            	 bookmarkRepository.findAll().stream().forEach(System.out::println);
+            System.out.println("---------------------------------------");
         };
     }
 }
@@ -124,4 +126,12 @@ class Bookmark {
     }
 
     private String label;
+
+	@Override
+	public String toString() {
+		return "Bookmark [userId=" + userId + ", id=" + id + ", href=" + href + ", description=" + description
+				+ ", label=" + label + "]";
+	}
+    
+    
 }

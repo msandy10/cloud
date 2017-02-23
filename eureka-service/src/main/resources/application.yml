@@ -1,9 +1,9 @@
 
 
+#server:
+#  port: ${vcap.application.port:8761}
 server:
-  port: ${vcap.application.port:8761}
-
-
+  port: 9761
 
 eureka:
   client:
